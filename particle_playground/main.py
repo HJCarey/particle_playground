@@ -12,14 +12,21 @@ def draw(surface, x, y, color, size):
         pygame.draw.line(surface, color, (x, y-1), (x, y+2), abs(size))
 
 
+class Atom:
+    def __init__(self, x, y, c):
+        self.x = x
+        self.y = y
+        self.vx = 0
+        self.vy = 0
+        self.color = c
+
+    def distance_to(self, other):
+        dx = self.x - other.x
+        dy = self.y - other.y
+        return (dx*dx + dy*dy)**0.5
+
 def atom(x, y, c):
-    return {
-        "x": x,
-        "y": y,
-        "vx": 0,
-        "vy": 0,
-        "color": c
-    }
+    return Atom(x, y, c)
 
 
 def randomxy():
@@ -35,27 +42,31 @@ def create(number, color):
 
 
 def rule(atoms1, atoms2, g):
-    for i in range(len(atoms1)):
+    quadtree = Quadtree(Boundary(0, 0, window_size, window_size), 4)
+    for atom in atoms2:
+        quadtree.insert(atom)
+
+    for a in atoms1:
         fx = 0
         fy = 0
-        for j in range(len(atoms2)):
-            a = atoms1[i]
-            b = atoms2[j]
-            dx = a["x"] - b["x"]
-            dy = a["y"] - b["y"]
-            d = (dx*dx + dy*dy)**0.5
-            if(d>0 and d<80):
+        nearby_atoms = []
+        quadtree.query(Boundary(a.x, a.y, 80, 80), nearby_atoms)
+        for b in nearby_atoms:
+            dx = a.x - b.x
+            dy = a.y - b.y
+            d = a.distance_to(b)
+            if d > 0:
                 F = g/d
                 fx += F*dx
                 fy += F*dy
-        a["vx"] = (a["vx"] + fx) * 0.5
-        a["vy"] = (a["vy"] + fy) * 0.5
-        a["x"] += a["vx"]
-        a["y"] += a["vy"]
-        if(a["x"] <= 0 or a["x"] >= window_size):
-            a["vx"] *= -1
-        if(a["y"] <= 0 or a["y"] >= window_size):
-            a["vy"] *= -1
+        a.vx = (a.vx + fx) * 0.5
+        a.vy = (a.vy + fy) * 0.5
+        a.x += a.vx
+        a.y += a.vy
+        if a.x <= 0 or a.x >= window_size:
+            a.vx *= -1
+        if a.y <= 0 or a.y >= window_size:
+            a.vy *= -1
 
 
 def main():

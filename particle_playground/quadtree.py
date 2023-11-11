@@ -18,6 +18,31 @@ class Quadtree:
                 self.southeast.insert(atom) or
                 self.southwest.insert(atom))
 
+    def query(self, range, found):
+        if not self.boundary.intersects(range):
+            return
+        for atom in self.atoms:
+            if range.contains(atom):
+                found.append(atom)
+        if self.divided:
+            self.northeast.query(range, found)
+            self.northwest.query(range, found)
+            self.southeast.query(range, found)
+            self.southwest.query(range, found)
+
+    def insert(self, atom):
+        if not self.boundary.contains(atom):
+            return False
+        if len(self.atoms) < self.capacity:
+            self.atoms.append(atom)
+            return True
+        if not self.divided:
+            self.subdivide()
+        return (self.northeast.insert(atom) or
+                self.northwest.insert(atom) or
+                self.southeast.insert(atom) or
+                self.southwest.insert(atom))
+
     def subdivide(self):
         x = self.boundary.x
         y = self.boundary.y
