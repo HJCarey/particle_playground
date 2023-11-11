@@ -107,7 +107,7 @@ def main():
         rule(green, yellow, 0.15)
 
         for i in range(len(atoms)):
-            draw(window, atoms[i]["x"], atoms[i]["y"], atoms[i]["color"], 3)
+            draw(window, atoms[i].x, atoms[i].y, atoms[i].color, 3)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
