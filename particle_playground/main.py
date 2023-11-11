@@ -2,7 +2,7 @@ import pygame
 import random
 
 atoms = []
-window_size = 300
+window_size = 1200
 pygame.init()
 window = pygame.display.set_mode((window_size, window_size))
 
@@ -18,7 +18,7 @@ def atom(x, y, c):
         "y": y,
         "vx": 0,
         "vy": 0,
-        "color": c        
+        "color": c
     }
 
 
@@ -60,19 +60,21 @@ def rule(atoms1, atoms2, g):
 
 def main():
     yellow = create(100, "yellow")
-    red = create(100, "red")
+    red = create(500, "red")
+    green = create(500, "green")
 
     run = True
     while run:
         window.fill(0)
 
         # Define rules that govern how the particles interact
-        # 1: Reds attracts each other by 0.1
         rule(red, red, 0.1)
-        # 2: Red and yellow repel by 0.15
         rule(red, yellow, -0.15)
-        # 3: Yellows repel each other by 0.1
         rule(yellow, yellow, -0.1)
+        rule(green, green, 0.05)
+        rule(green, red, -0.15)
+        rule(green, yellow, 0.15)
+
         for i in range(len(atoms)):
             draw(window, atoms[i]["x"], atoms[i]["y"], atoms[i]["color"], 3)
 
