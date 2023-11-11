@@ -1,10 +1,30 @@
 import pygame
 import random
+from quadtree import Quadtree
 
 atoms = []
 window_size = 1200
 pygame.init()
 window = pygame.display.set_mode((window_size, window_size))
+
+class Boundary:
+    def __init__(self, x, y, w, h):
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
+
+    def contains(self, atom):
+        return (atom.x >= self.x - self.w and
+                atom.x < self.x + self.w and
+                atom.y >= self.y - self.h and
+                atom.y < self.y + self.h)
+
+    def intersects(self, range):
+        return not (range.x - range.w > self.x + self.w or
+                    range.x + range.w < self.x - self.w or
+                    range.y - range.h > self.y + self.h or
+                    range.y + range.h < self.y - self.h)
 
 
 def draw(surface, x, y, color, size):
