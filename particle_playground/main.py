@@ -36,7 +36,7 @@ import numpy as np
 
 class Atom:
     def __init__(self, x, y, c):
-        self.position = np.array([x, y])
+        self.position = np.array([x, y], dtype=np.float64)
         self.velocity = np.array([0.0, 0.0])
         self.color = c
 
