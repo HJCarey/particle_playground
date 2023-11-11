@@ -32,12 +32,12 @@ def draw(surface, x, y, color, size):
         pygame.draw.line(surface, color, (x, y-1), (x, y+2), abs(size))
 
 
+import numpy as np
+
 class Atom:
     def __init__(self, x, y, c):
-        self.x = x
-        self.y = y
-        self.vx = 0
-        self.vy = 0
+        self.position = np.array([x, y])
+        self.velocity = np.array([0.0, 0.0])
         self.color = c
 
     def distance_to(self, other):
@@ -67,26 +67,20 @@ def rule(atoms1, atoms2, g):
         quadtree.insert(atom)
 
     for a in atoms1:
-        fx = 0
-        fy = 0
+        force = np.array([0.0, 0.0])
         nearby_atoms = []
-        quadtree.query(Boundary(a.x, a.y, 80, 80), nearby_atoms)
+        quadtree.query(Boundary(a.position[0], a.position[1], 80, 80), nearby_atoms)
         for b in nearby_atoms:
-            dx = a.x - b.x
-            dy = a.y - b.y
-            d = a.distance_to(b)
-            if d > 0:
-                F = g/d
-                fx += F*dx
-                fy += F*dy
-        a.vx = (a.vx + fx) * 0.5
-        a.vy = (a.vy + fy) * 0.5
-        a.x += a.vx
-        a.y += a.vy
-        if a.x <= 0 or a.x >= window_size:
-            a.vx *= -1
-        if a.y <= 0 or a.y >= window_size:
-            a.vy *= -1
+            displacement = a.position - b.position
+            distance = np.linalg.norm(displacement)
+            if distance > 0:
+                force += g * displacement / distance
+        a.velocity = (a.velocity + force) * 0.5
+        a.position += a.velocity
+        if a.position[0] <= 0 or a.position[0] >= window_size:
+            a.velocity[0] *= -1
+        if a.position[1] <= 0 or a.position[1] >= window_size:
+            a.velocity[1] *= -1
 
 
 def main():
