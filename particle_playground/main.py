@@ -84,7 +84,7 @@ def rule(atoms1, atoms2, g):
 
 
 def main():
-    yellow = create(100, "yellow")
+    yellow = create(50, "yellow")
     red = create(500, "red")
     green = create(500, "green")
 
@@ -94,9 +94,10 @@ def main():
 
         # Define rules that govern how the particles interact
         rule(red, red, 0.1)
-        rule(red, yellow, -0.15)
         rule(yellow, yellow, -0.1)
         rule(green, green, 0.05)
+
+        rule(red, yellow, -0.15)
         rule(green, red, -0.15)
         rule(green, yellow, 0.15)
 
