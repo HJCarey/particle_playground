@@ -5,13 +5,17 @@ Rectangle::Rectangle(double x, double y, double w, double h)
     : x(x), y(y), w(w), h(h) {}
 
 bool Rectangle::contains(const Atom& atom) const {
-    // TODO: Implement this method
-    return false;
+    return (atom.position[0] >= x - w &&
+            atom.position[0] < x + w &&
+            atom.position[1] >= y - h &&
+            atom.position[1] < y + h);
 }
 
 bool Rectangle::intersects(const Rectangle& range) const {
-    // TODO: Implement this method
-    return false;
+    return !(range.x - range.w > x + w ||
+             range.x + range.w < x - w ||
+             range.y - range.h > y + h ||
+             range.y + range.h < y - h);
 }
 
 Quadtree::Quadtree(const Rectangle& boundary, int capacity)
