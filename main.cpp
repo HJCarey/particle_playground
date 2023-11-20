@@ -6,6 +6,29 @@
 
 const int window_size = 600;
 
+class Boundary {
+public:
+    Boundary(double x, double y, double w, double h)
+        : x(x), y(y), w(w), h(h) {}
+
+    bool contains(const Atom& atom) const {
+        return (atom.position[0] >= x - w &&
+                atom.position[0] < x + w &&
+                atom.position[1] >= y - h &&
+                atom.position[1] < y + h);
+    }
+
+    bool intersects(const Boundary& range) const {
+        return !(range.x - range.w > x + w ||
+                 range.x + range.w < x - w ||
+                 range.y - range.h > y + h ||
+                 range.y + range.h < y - h);
+    }
+
+private:
+    double x, y, w, h;
+};
+
 std::vector<Atom*> create(int number, const std::string& color) {
     std::vector<Atom*> atoms;
     for (int i = 0; i < number; ++i) {
