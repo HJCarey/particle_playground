@@ -8,9 +8,10 @@ public:
     Atom(double x, double y, const std::string& color);
     double distance_to(const Atom& other) const;
 
-private:
+public:
     double position[2];
     double velocity[2];
+private:
     std::string color;
 };
 
