@@ -11,6 +11,11 @@ public:
     bool contains(const Atom& atom) const;
     bool intersects(const Rectangle& range) const;
 
+    double getX() const { return x; }
+    double getY() const { return y; }
+    double getW() const { return w; }
+    double getH() const { return h; }
+
 private:
     double x, y, w, h;
 };

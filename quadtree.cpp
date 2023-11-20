@@ -57,10 +57,10 @@ void Quadtree::query(const Rectangle& range, std::vector<Atom*>& found) const {
 }
 
 void Quadtree::subdivide() {
-    double x = boundary.x;
-    double y = boundary.y;
-    double w = boundary.w / 2;
-    double h = boundary.h / 2;
+    double x = boundary.getX();
+    double y = boundary.getY();
+    double w = boundary.getW() / 2;
+    double h = boundary.getH() / 2;
 
     Rectangle ne(x + w, y - h, w, h);
     northeast = new Quadtree(ne, capacity);
