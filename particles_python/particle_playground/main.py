@@ -3,7 +3,7 @@ import random
 from quadtree import Quadtree
 
 atoms = []
-window_size = 1200
+window_size = 600
 pygame.init()
 window = pygame.display.set_mode((window_size, window_size))
 
@@ -84,22 +84,38 @@ def rule(atoms1, atoms2, g):
 
 
 def main():
-    yellow = create(50, "yellow")
-    red = create(500, "red")
-    green = create(500, "green")
+    yellow = create(200, "yellow")
+    red = create(200, "red")
+    green = create(200, "green")
+    # blue = create(100, "blue")
 
     run = True
     while run:
         window.fill(0)
 
-        # Define rules that govern how the particles interact
-        rule(red, red, 0.1)
-        rule(yellow, yellow, -0.1)
-        rule(green, green, 0.05)
+        game = 2
 
-        rule(red, yellow, -0.15)
-        rule(green, red, -0.15)
-        rule(green, yellow, 0.15)
+        # Define rules that govern how the particles interact
+        # GAME 1: This game uses the following colors:
+        #   - red, yellow, green, blue
+        # rule(red, red, 0.10)
+        # rule(yellow, yellow, -0.10)
+        # rule(green, green, 0.05)
+        # rule(blue, blue, 0.05)
+
+        # rule(red, yellow, -0.15)
+        # rule(green, red, -0.15)
+        # rule(red, green, -0.15)
+        # rule(green, yellow, 0.15)
+        # rule(blue, yellow, 0.15)
+        # rule(blue, red, 0.10)
+
+        # GAME 2
+        rule(red, red, 0.1)
+        rule(yellow, red, 0.15)
+        rule(green, green, -0.7)
+        rule(green, red, -0.2)
+        rule(red, green, -0.1)
 
         for i in range(len(atoms)):
             draw(window, atoms[i].position[0], atoms[i].position[1], atoms[i].color, 3)
