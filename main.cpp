@@ -4,6 +4,8 @@
 
 #include <cstdlib>  // for rand()
 
+window_size = 600;
+
 std::vector<Atom*> create(int number, const std::string& color) {
     std::vector<Atom*> atoms;
     for (int i = 0; i < number; ++i) {
