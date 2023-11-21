@@ -2,6 +2,7 @@
 #include "atom.h"
 #include <vector>
 #include <SDL.h>
+#include <SDL.h>
 #include <iostream>
 
 #include <cstdlib>  // for rand()
@@ -76,9 +77,28 @@ void rule(std::vector<Atom*>& atoms1, std::vector<Atom*>& atoms2, double g) {
 }
 
 int main(int argc, char* argv[]) {
-    // TODO: Implement this function
-    std::cout << "SDL Works" << std::endl;
-    std::cin.get();
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
+
+    SDL_Window* window = SDL_CreateWindow("Particle Simulation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window_size, window_size, SDL_WINDOW_SHOWN);
+    if (window == NULL) {
+        std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
+
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == NULL) {
+        std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
+        return 1;
+    }
+
+    // TODO: Implement the rest of the function
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 
     return 0;
 }
