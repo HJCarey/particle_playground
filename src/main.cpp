@@ -1,6 +1,8 @@
 #include "quadtree.h"
 #include "atom.h"
 #include <vector>
+#include <SDL.h>
+#include <iostream>
 
 #include <cstdlib>  // for rand()
 
@@ -73,7 +75,10 @@ void rule(std::vector<Atom*>& atoms1, std::vector<Atom*>& atoms2, double g) {
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     // TODO: Implement this function
+    std::cout << "SDL Works" << std::endl;
+    std::cin.get();
+
     return 0;
 }
