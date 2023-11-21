@@ -2,7 +2,6 @@
 #include "atom.h"
 #include <vector>
 #include <SDL.h>
-#include <SDL.h>
 #include <iostream>
 
 #include <cstdlib>  // for rand()
