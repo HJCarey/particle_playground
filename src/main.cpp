@@ -93,7 +93,25 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // TODO: Implement the rest of the function
+    bool running = true;
+    SDL_Event event;
+
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                running = false;
+            }
+        }
+
+        // TODO: Update particle positions
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Set color to black
+        SDL_RenderClear(renderer);  // Clear the screen
+
+        // TODO: Draw particles
+
+        SDL_RenderPresent(renderer);  // Update the screen
+    }
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
