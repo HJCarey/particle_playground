@@ -108,7 +108,11 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);  // Set color to black
         SDL_RenderClear(renderer);  // Clear the screen
 
-        // TODO: Draw particles
+        // Draw particles
+        for (Atom* atom : atoms) {
+            SDL_SetRenderDrawColor(renderer, atom->get_color().r, atom->get_color().g, atom->get_color().b, 255);
+            SDL_RenderDrawPoint(renderer, atom->position[0], atom->position[1]);
+        }
 
         SDL_RenderPresent(renderer);  // Update the screen
     }

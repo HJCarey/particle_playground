@@ -11,6 +11,7 @@ public:
 public:
     double position[2];
     double velocity[2];
+    std::string get_color() const { return color; }
 private:
     std::string color;
 };

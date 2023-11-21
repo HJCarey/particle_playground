@@ -14,3 +14,7 @@ double Atom::distance_to(const Atom& other) const {
     double dy = position[1] - other.position[1];
     return std::sqrt(dx*dx + dy*dy);
 }
+
+std::string Atom::get_color() const {
+    return color;
+}
