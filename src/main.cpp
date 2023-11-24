@@ -20,15 +20,15 @@ public:
 std::vector<Atom> create(int number, std::string color) {
     std::vector<Atom> atoms;
     for (int i = 0; i < number; i++) {
-        int x = randomxy();
-        int y = randomxy();
+        int x = randomxy(window_size);
+        int y = randomxy(window_size);
         atoms.push_back(Atom(x, y, color));
     }
     return atoms;
 }
 
-int randomxy() {
-    return rand() % 100;  // replace with your own logic
+int randomxy(int window_size) {
+    return round((double)rand() / RAND_MAX * (window_size + 1));
 }
 
 void rule(std::vector<Atom>& atoms1, std::vector<Atom>& atoms2, double g, int window_size) {
