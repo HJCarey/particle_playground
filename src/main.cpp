@@ -27,6 +27,10 @@ std::vector<Atom> create(int number, std::string color) {
     return atoms;
 }
 
+int randomxy() {
+    return rand() % 100;  // replace with your own logic
+}
+
 void rule(std::vector<Atom>& atoms1, std::vector<Atom>& atoms2, double g, int window_size) {
     for (auto& a : atoms1) {
         int fx = 0;
@@ -64,6 +68,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-int randomxy() {
-    return rand() % 100;  // replace with your own logic
-}
+
