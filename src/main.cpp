@@ -5,6 +5,8 @@
 #include <cstdlib>  // for rand()
 #include <cmath>  // for sqrt and pow
 
+const int WINDOW_SIZE = 800;
+
 class Atom {
 public:
     int x, y, vx, vy;
@@ -20,18 +22,18 @@ public:
 std::vector<Atom> create(int number, std::string color) {
     std::vector<Atom> atoms;
     for (int i = 0; i < number; i++) {
-        int x = randomxy(window_size);
-        int y = randomxy(window_size);
+        int x = randomxy(WINDOW_SIZE);
+        int y = randomxy(WINDOW_SIZE);
         atoms.push_back(Atom(x, y, color));
     }
     return atoms;
 }
 
-int randomxy(int window_size) {
-    return round((double)rand() / RAND_MAX * (window_size + 1));
+int randomxy() {
+    return round((double)rand() / RAND_MAX * (WINDOW_SIZE + 1));
 }
 
-void rule(std::vector<Atom>& atoms1, std::vector<Atom>& atoms2, double g, int window_size) {
+void rule(std::vector<Atom>& atoms1, std::vector<Atom>& atoms2, double g) {
     for (auto& a : atoms1) {
         int fx = 0;
         int fy = 0;
@@ -49,10 +51,10 @@ void rule(std::vector<Atom>& atoms1, std::vector<Atom>& atoms2, double g, int wi
         a.vy = (a.vy + fy) * 0.5;
         a.x += a.vx;
         a.y += a.vy;
-        if (a.x <= 0 || a.x >= window_size) {
+        if (a.x <= 0 || a.x >= WINDOW_SIZE) {
             a.vx *= -1;
         }
-        if (a.y <= 0 || a.y >= window_size) {
+        if (a.y <= 0 || a.y >= WINDOW_SIZE) {
             a.vy *= -1;
         }
     }
@@ -62,9 +64,9 @@ int main(int argc, char* argv[]) {
     std::vector<Atom> red = create(200, "red");
     std::vector<Atom> green = create(200, "green");
 
-    double g = 0.1;  // replace with your own value
-    int window_size = 100;  // replace with your own value
-    rule(red, green, g, window_size);
+    rule(red, red, -0.1); // Reds attract reds slightly
+    rule(red, green, 0.1); // Reds repel greens slightly
+    rule(green, red, -0.2); // Greens attract reds strongly
 
     return 0;
 }
