@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <cstdlib>  // for rand()
+#include <cmath>  // for sqrt and pow
 
 class Atom {
 public:
